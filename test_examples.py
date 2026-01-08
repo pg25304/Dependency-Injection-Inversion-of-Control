@@ -11,47 +11,56 @@ import unittest
 from unittest.mock import Mock, MagicMock
 from typing import List
 
-
-# Import the interfaces from real_world_example
-from abc import ABC, abstractmethod
-
-
-class IPaymentGateway(ABC):
-    @abstractmethod
-    def process_payment(self, amount: float, card_info: dict) -> dict:
-        pass
-
-
-class IInventoryService(ABC):
-    @abstractmethod
-    def check_availability(self, product_id: str, quantity: int) -> bool:
-        pass
+# Import the interfaces and OrderService from real_world_example
+# Note: In a real project, these would be in separate modules
+# For this educational example, we're importing to avoid duplication
+try:
+    from real_world_example import (
+        IPaymentGateway,
+        IInventoryService,
+        INotificationService,
+        ILogger,
+        IOrderRepository,
+        OrderService as RealWorldOrderService
+    )
+    IMPORT_AVAILABLE = True
+except ImportError:
+    # Fallback: Define interfaces locally if import fails
+    from abc import ABC, abstractmethod
+    IMPORT_AVAILABLE = False
     
-    @abstractmethod
-    def reserve_items(self, product_id: str, quantity: int) -> bool:
-        pass
-
-
-class INotificationService(ABC):
-    @abstractmethod
-    def send_notification(self, recipient: str, message: str):
-        pass
-
-
-class ILogger(ABC):
-    @abstractmethod
-    def log(self, level: str, message: str):
-        pass
-
-
-class IOrderRepository(ABC):
-    @abstractmethod
-    def save(self, order: dict) -> str:
-        pass
+    class IPaymentGateway(ABC):
+        @abstractmethod
+        def process_payment(self, amount: float, card_info: dict) -> dict:
+            pass
     
-    @abstractmethod
-    def find_by_id(self, order_id: str) -> dict:
-        pass
+    class IInventoryService(ABC):
+        @abstractmethod
+        def check_availability(self, product_id: str, quantity: int) -> bool:
+            pass
+        
+        @abstractmethod
+        def reserve_items(self, product_id: str, quantity: int) -> bool:
+            pass
+    
+    class INotificationService(ABC):
+        @abstractmethod
+        def send_notification(self, recipient: str, message: str):
+            pass
+    
+    class ILogger(ABC):
+        @abstractmethod
+        def log(self, level: str, message: str):
+            pass
+    
+    class IOrderRepository(ABC):
+        @abstractmethod
+        def save(self, order: dict) -> str:
+            pass
+        
+        @abstractmethod
+        def find_by_id(self, order_id: str) -> dict:
+            pass
 
 
 class OrderService:

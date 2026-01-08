@@ -67,13 +67,10 @@ class DIContainer:
         if callable(implementation) and not isinstance(implementation, type):
             return implementation()
         
-        # Create instance (auto-inject dependencies if possible)
-        try:
-            instance = implementation()
-        except TypeError:
-            # If constructor needs arguments, create without args for simplicity
-            # In a real container, you'd inspect __init__ and inject dependencies
-            instance = implementation()
+        # Create instance
+        # Note: In a real DI container, you would inspect __init__ parameters
+        # and automatically resolve and inject dependencies
+        instance = implementation()
         
         # Store singleton
         if self._lifetimes[interface] == 'singleton':
