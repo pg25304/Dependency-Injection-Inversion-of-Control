@@ -1,0 +1,9 @@
+# Python Dependency Injection & IoC Examples
+# No external dependencies required - uses only Python standard library
+
+# For development and testing (optional):
+# pytest>=7.0.0
+# pytest-cov>=4.0.0
+# mypy>=1.0.0
+# black>=23.0.0
+# pylint>=2.17.0
